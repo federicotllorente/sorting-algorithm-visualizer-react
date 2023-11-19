@@ -1,38 +1,65 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+header {
+  display: flex;
+  justify-content: space-between;
+  background-color: blanchedalmond;
+  padding: 16px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+header div {
+  display: flex;
+  gap: 16px;
+  align-items: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.settings-modal {
+  position: fixed;
+  width: 50vw;
+  height: 50vh;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  box-shadow: 0px 0px 20px #0000002d;
+}
+
+.settings-modal--wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 32px;
+  padding: 32px;
+  background-color: burlywood;
 }
 
-.App-link {
-  color: #61dafb;
+.settings-modal--wrapper--close-button {
+  position: absolute;
+  top: 32px;
+  right: 32px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.settings-modal--wrapper--size,
+.settings-modal--wrapper--sorting {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.settings-modal--wrapper--size div,
+.settings-modal--wrapper--sorting div {
+  display: flex;
+  gap: 8px;
+}
+
+.settings-modal--wrapper--size input {
+  width: -webkit-fill-available;
+}
+
+.settings-modal--wrapper--sorting div button.active {
+  background-color: cadetblue;
 }
