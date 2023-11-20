@@ -1,41 +1,25 @@
-import { FunctionComponent, useEffect, useState } from "react";
-import { Sorting, maxArraySize, maxItemSize } from "../utils/constants";
+import { FunctionComponent } from "react";
+import { Sorting, maxArraySize } from "../utils/constants";
 import { getPercentageFromItemSize } from "../utils/helpers/getPercentageFromItemSize";
 
 type SortingVisualizerProps = {
   size: number;
   sorting: Sorting;
+  array: number[];
 }
 
 export const SortingVisualizer: FunctionComponent<SortingVisualizerProps> = ({
   size,
-  sorting
+  sorting,
+  array
 }) => {
-  const [array, setArray] = useState<Array<number>>([]);
-
-  const resetArray = (arraySize: number) => {
-    const newArray = [];
-
-    for (let i = 0; i < arraySize; i++) {
-      newArray.push(Math.floor(Math.random() * maxItemSize));
-    }
-
-    setArray(newArray);
-  }
-
-  useEffect(() => {
-    resetArray(size);
-  }, [size]);
-
   return (
     <div className="sorting-visualizer" style={{ gap: (size / maxArraySize) >= 0.6 ? '4px' : '8px' }}>
       {array.map((el, idx) => (
         <span
-          key={`sorting-array-${idx}`}
+          key={`sorting-array-${el}-idx-${idx}`}
           style={{ height: `${getPercentageFromItemSize(el)}%` }}
-        >
-          <p>{el}</p>
-        </span>
+        ></span>
       ))}
     </div>
   )
