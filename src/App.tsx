@@ -7,7 +7,7 @@ const App = () => {
   const [sorting, setSorting] = useState<Sorting>(Sorting.merge);
 
   useEffect(() => {
-    const randomSize = Math.floor(Math.random() * maxSize);
+    const randomSize = Math.floor(Math.random() * maxArraySize);
     setSize(randomSize);
   }, []);
 
@@ -23,7 +23,10 @@ const App = () => {
           setSorting={setSorting}
         />
       )}
-      <SortingVisualizer />
+      <SortingVisualizer
+        size={size}
+        sorting={sorting}
+      />
     </div>
   );
 }
@@ -70,7 +73,14 @@ enum Sorting {
   'bubble' = 'bubble'
 }
 
-const maxSize = 2000;
+const maxArraySize = 100;
+const maxItemSize = 2000;
+
+const getPercentageFromItemSize = (itemSize: number) => {
+  const percentage = (itemSize * 100) / maxItemSize;
+
+  return percentage;
+}
 
 const SettingsModal: FunctionComponent<SettingsModalProps> = ({
   setIsSettingsOpen,
@@ -95,7 +105,7 @@ const SettingsModal: FunctionComponent<SettingsModalProps> = ({
               type="range"
               id="size"
               min="0"
-              max={`${maxSize}`}
+              max={`${maxArraySize}`}
               step="10"
               value={`${size}`}
               onChange={(e) => setSize(Number(e.target.value))}
@@ -143,10 +153,41 @@ const SettingsModal: FunctionComponent<SettingsModalProps> = ({
   )
 }
 
-const SortingVisualizer = () => {
+type SortingVisualizerProps = {
+  size: number;
+  sorting: Sorting;
+}
+
+const SortingVisualizer: FunctionComponent<SortingVisualizerProps> = ({
+  size,
+  sorting
+}) => {
+  const [array, setArray] = useState<Array<number>>([]);
+
+  const resetArray = (arraySize: number) => {
+    const newArray = [];
+
+    for (let i = 0; i < arraySize; i++) {
+      newArray.push(Math.floor(Math.random() * maxItemSize));
+    }
+
+    setArray(newArray);
+  }
+
+  useEffect(() => {
+    resetArray(size);
+  }, [size]);
+
   return (
-    <div>
-      SortingVisualizer component
+    <div className="sorting-visualizer" style={{ gap: (size / maxArraySize) >= 0.6 ? '4px' : '8px' }}>
+      {array.map((el, idx) => (
+        <span
+          key={`sorting-array-${idx}`}
+          style={{ height: `${getPercentageFromItemSize(el)}%` }}
+        >
+          <p>{el}</p>
+        </span>
+      ))}
     </div>
   )
 }

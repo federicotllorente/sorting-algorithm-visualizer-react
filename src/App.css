@@ -24,6 +24,7 @@ header div {
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   box-shadow: 0px 0px 20px #0000002d;
+  z-index: 10;
 }
 
 .settings-modal--wrapper {
@@ -62,4 +63,38 @@ header div {
 
 .settings-modal--wrapper--sorting div button.active {
   background-color: cadetblue;
+}
+
+.sorting-visualizer {
+  width: 80%;
+  height: calc(100vh - 64px);
+  margin: 0 auto;
+  display: flex;
+  /* flex-direction: column; */
+  /* gap: 8px; */
+  /* align-items: end; */
+}
+
+.sorting-visualizer span {
+  /* height: 8px; */
+  /* width: 8px; */
+  width: -webkit-fill-available;
+  position: relative;
+  background-color: blue;
+}
+
+.sorting-visualizer span p {
+  position: absolute;
+  /* left: -50px; */
+  top: -26px;
+  /* top: 50%; */
+  left: 50%;
+  /* transform: translateY(-50%); */
+  transform: translateX(-50%);
+  opacity: 0%;
+  transition: 0.3s;
+}
+
+.sorting-visualizer span:hover p {
+  opacity: 100%;
 }
