@@ -70,26 +70,18 @@ header div {
   height: calc(100vh - 64px);
   margin: 0 auto;
   display: flex;
-  /* flex-direction: column; */
-  /* gap: 8px; */
-  /* align-items: end; */
 }
 
 .sorting-visualizer span {
-  /* height: 8px; */
-  /* width: 8px; */
   width: -webkit-fill-available;
   position: relative;
-  background-color: blue;
+  background-color: cadetblue;
 }
 
 .sorting-visualizer span p {
   position: absolute;
-  /* left: -50px; */
   top: -26px;
-  /* top: 50%; */
   left: 50%;
-  /* transform: translateY(-50%); */
   transform: translateX(-50%);
   opacity: 0%;
   transition: 0.3s;
