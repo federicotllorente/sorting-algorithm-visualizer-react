@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import JSConfetti from 'js-confetti';
 import './App.css';
 
 import { Header } from './components/Header';
@@ -9,13 +10,15 @@ import { maxArraySize, maxItemSize } from './utils/constants';
 import { useQuickSort } from './utils/helpers/quickSort';
 import { Entry, EntryState, Sorting } from './utils/types';
 
+const jsConfetti = new JSConfetti()
+
 const App = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [size, setSize] = useState<number>(0);
   const [sorting, setSorting] = useState<Sorting>(Sorting.merge);
   const [array, setArray] = useState<Array<Entry>>([]);
 
-  const { quickSort } = useQuickSort({ array, setArray });
+  const { doQuickSort } = useQuickSort({ setArray });
 
   useEffect(() => {
     const randomSize = Math.floor(Math.random() * maxArraySize);
@@ -40,8 +43,9 @@ const App = () => {
   }, [size]);
 
   const onQuickSort = async () => {
-    const arrayCopy = array;
-    await quickSort(arrayCopy, 0, arrayCopy.length - 1);
+    const arrayCopy = [...array];
+    await doQuickSort(arrayCopy);
+    jsConfetti.addConfetti()
   }
 
   const getHandleSortFunction = (sortingMethod: Sorting): () => void => {
