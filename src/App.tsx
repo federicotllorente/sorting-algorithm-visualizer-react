@@ -6,13 +6,15 @@ import { SettingsModal } from './components/SettingsModal';
 import { SortingVisualizer } from './components/SortingVisualizer';
 
 import { Sorting, maxArraySize, maxItemSize } from './utils/constants';
-import { quickSort } from './utils/helpers/quickSort';
+import { useQuickSort } from './utils/helpers/quickSort';
 
 const App = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [size, setSize] = useState<number>(0);
   const [sorting, setSorting] = useState<Sorting>(Sorting.merge);
   const [array, setArray] = useState<Array<number>>([]);
+
+  const { quickSort } = useQuickSort({ array, setArray });
 
   useEffect(() => {
     const randomSize = Math.floor(Math.random() * maxArraySize);
@@ -33,10 +35,9 @@ const App = () => {
     resetArray(size);
   }, [size]);
 
-  const onQuickSort = () => {
+  const onQuickSort = async () => {
     const arrayCopy = array;
-    quickSort(arrayCopy, 0, arrayCopy.length - 1);
-    setArray([...arrayCopy]);
+    await quickSort(arrayCopy, 0, arrayCopy.length - 1);
   }
 
   const getHandleSortFunction = (sortingMethod: Sorting): () => void => {

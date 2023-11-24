@@ -1,30 +1,63 @@
-export const quickSort = (arr: number[], start: number, end: number) => {
-  if (start >= end) return;
+import { Dispatch, SetStateAction } from "react"
 
-  let idx: number = partition(arr, start, end);
-
-  quickSort(arr, start, idx - 1);
-  quickSort(arr, idx + 1, end);
+type UseQuickSort = {
+  array: number[];
+  setArray: Dispatch<SetStateAction<number[]>>;
 }
 
-const partition = (arr: number[], start: number, end: number): number => {
-  let pivotIndex = start;
-  let pivotValue = arr[end];
+type UseQuickSortOutput = {
+  quickSort: (arr: number[], start: number, end: number) => Promise<void>;
+}
 
-  for (let i = start; i < end; i++) {
-    if (arr[i] < pivotValue) {
-      swap(arr, i, pivotIndex);
-      pivotIndex++;
-    }
+export const useQuickSort = ({
+  array,
+  setArray
+}: UseQuickSort): UseQuickSortOutput => {
+  const quickSort = async (arr: number[], start: number, end: number) => {
+    if (start >= end) return;
+  
+    let idx: number = await partition(arr, start, end);
+  
+    await quickSort(arr, start, idx - 1);
+    await quickSort(arr, idx + 1, end);
   }
 
-  swap(arr, pivotIndex, end);
+  const partition = async (arr: number[], start: number, end: number): Promise<number> => {
+    let pivotIndex = start;
+    let pivotValue = arr[end];
+  
+    for (let i = start; i < end; i++) {
+      if (arr[i] < pivotValue) {
+        await swap(arr, i, pivotIndex);
+        pivotIndex++;
+      }
+    }
+  
+    await swap(arr, pivotIndex, end);
+  
+    return pivotIndex;
+  }
 
-  return pivotIndex;
-}
+  const swap = async (arr: number[], a: number, b: number) => {
+    await sleep(10);
 
-const swap = (arr: number[], a: number, b: number) => {
-  let temp = arr[a];
-  arr[a] = arr[b];
-  arr[b] = temp;
+    // TODO: Set red as BG color for both a and b
+
+    let tempArray = arr;
+    let temp = tempArray[a];
+    tempArray[a] = tempArray[b];
+    tempArray[b] = temp;
+
+    setArray([...tempArray]);
+
+    // TODO: Set green as BG color for both a and b
+  }
+
+  const sleep = (ms: number) => {
+    return new Promise(res => setTimeout(res, ms));
+  }
+
+  return {
+    quickSort
+  }
 }
