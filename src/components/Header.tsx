@@ -1,6 +1,8 @@
 import { Dispatch, FunctionComponent, SetStateAction } from "react";
 
 type HeaderProps = {
+  isConfettiEnabled: boolean
+  setIsConfettiEnabled: Dispatch<SetStateAction<boolean>>;
   setIsSettingsOpen: Dispatch<SetStateAction<boolean>>;
   size: number;
   resetArray: (arraySize: number) => void;
@@ -8,6 +10,8 @@ type HeaderProps = {
 }
 
 export const Header: FunctionComponent<HeaderProps> = ({
+  isConfettiEnabled,
+  setIsConfettiEnabled,
   setIsSettingsOpen,
   size,
   resetArray,
@@ -20,6 +24,9 @@ export const Header: FunctionComponent<HeaderProps> = ({
         {/* <p>By <a href="https://www.federicotllorente.com/" target="_blank" rel="noopener noreferrer">Federico Tejedor Llorente</a></p> */}
       </div>
       <div>
+        <button onClick={() => setIsConfettiEnabled(v => !v)}>
+          {isConfettiEnabled ? 'Disable Confetti' : 'Enable Confetti'}
+        </button>
         <button onClick={() => resetArray(size)}>
           Generate new array
         </button>

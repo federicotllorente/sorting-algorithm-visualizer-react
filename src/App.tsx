@@ -13,6 +13,7 @@ import { Entry, EntryState, Sorting } from './utils/types';
 const jsConfetti = new JSConfetti()
 
 const App = () => {
+  const [isConfettiEnabled, setIsConfettiEnabled] = useState<boolean>(true);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [size, setSize] = useState<number>(0);
   const [sorting, setSorting] = useState<Sorting>(Sorting.merge);
@@ -45,7 +46,7 @@ const App = () => {
   const onQuickSort = async () => {
     const arrayCopy = [...array];
     await doQuickSort(arrayCopy);
-    jsConfetti.addConfetti()
+    if (isConfettiEnabled) jsConfetti.addConfetti()
   }
 
   const getHandleSortFunction = (sortingMethod: Sorting): () => void => {
@@ -63,6 +64,8 @@ const App = () => {
   return (
     <div className="App">
       <Header
+        isConfettiEnabled={isConfettiEnabled}
+        setIsConfettiEnabled={setIsConfettiEnabled}
         setIsSettingsOpen={setIsSettingsOpen}
         size={size}
         resetArray={resetArray}
