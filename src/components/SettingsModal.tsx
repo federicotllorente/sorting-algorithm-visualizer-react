@@ -1,5 +1,6 @@
 import { Dispatch, FunctionComponent, SetStateAction } from "react";
-import { Sorting, maxArraySize } from "../utils/constants";
+import { maxArraySize } from "../utils/constants";
+import { Sorting } from "../utils/types";
 
 type SettingsModalProps = {
   setIsSettingsOpen: Dispatch<SetStateAction<boolean>>;

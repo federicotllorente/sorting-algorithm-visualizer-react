@@ -1,19 +1,20 @@
 import { Dispatch, SetStateAction } from "react"
+import { Entry, EntryState } from "../types";
 
 type UseQuickSort = {
-  array: number[];
-  setArray: Dispatch<SetStateAction<number[]>>;
+  array: Array<Entry>;
+  setArray: Dispatch<SetStateAction<Array<Entry>>>;
 }
 
 type UseQuickSortOutput = {
-  quickSort: (arr: number[], start: number, end: number) => Promise<void>;
+  quickSort: (arr: Array<Entry>, start: number, end: number) => Promise<void>;
 }
 
 export const useQuickSort = ({
   array,
   setArray
 }: UseQuickSort): UseQuickSortOutput => {
-  const quickSort = async (arr: number[], start: number, end: number) => {
+  const quickSort = async (arr: Array<Entry>, start: number, end: number) => {
     if (start >= end) return;
   
     let idx: number = await partition(arr, start, end);
@@ -22,12 +23,12 @@ export const useQuickSort = ({
     await quickSort(arr, idx + 1, end);
   }
 
-  const partition = async (arr: number[], start: number, end: number): Promise<number> => {
+  const partition = async (arr: Array<Entry>, start: number, end: number): Promise<number> => {
     let pivotIndex = start;
-    let pivotValue = arr[end];
+    let pivotValue = arr[end].value;
   
     for (let i = start; i < end; i++) {
-      if (arr[i] < pivotValue) {
+      if (arr[i].value < pivotValue) {
         await swap(arr, i, pivotIndex);
         pivotIndex++;
       }
@@ -38,19 +39,29 @@ export const useQuickSort = ({
     return pivotIndex;
   }
 
-  const swap = async (arr: number[], a: number, b: number) => {
+  const swap = async (arr: Array<Entry>, a: number, b: number) => {
     await sleep(10);
 
     // TODO: Set red as BG color for both a and b
-
     let tempArray = arr;
+    tempArray[a].state = EntryState.validating;
+    tempArray[b].state = EntryState.validating;
+    setArray([...tempArray]);
+
+    await sleep(10);
+
+    // Swap array items
     let temp = tempArray[a];
     tempArray[a] = tempArray[b];
     tempArray[b] = temp;
-
     setArray([...tempArray]);
 
+    await sleep(10);
+
     // TODO: Set green as BG color for both a and b
+    tempArray[a].state = EntryState.validated;
+    tempArray[b].state = EntryState.validated;
+    setArray([...tempArray]);
   }
 
   const sleep = (ms: number) => {

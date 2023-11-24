@@ -76,5 +76,13 @@ header div {
 .sorting-visualizer span {
   width: -webkit-fill-available;
   position: relative;
-  background-color: cadetblue;
+  background-color: rgb(0, 119, 255);
+}
+
+.sorting-visualizer span.validating {
+  background-color: rgb(230, 46, 46);
+}
+
+.sorting-visualizer span.validated {
+  background-color: green;
 }

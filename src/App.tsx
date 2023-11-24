@@ -5,14 +5,15 @@ import { Header } from './components/Header';
 import { SettingsModal } from './components/SettingsModal';
 import { SortingVisualizer } from './components/SortingVisualizer';
 
-import { Sorting, maxArraySize, maxItemSize } from './utils/constants';
+import { maxArraySize, maxItemSize } from './utils/constants';
 import { useQuickSort } from './utils/helpers/quickSort';
+import { Entry, EntryState, Sorting } from './utils/types';
 
 const App = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [size, setSize] = useState<number>(0);
   const [sorting, setSorting] = useState<Sorting>(Sorting.merge);
-  const [array, setArray] = useState<Array<number>>([]);
+  const [array, setArray] = useState<Array<Entry>>([]);
 
   const { quickSort } = useQuickSort({ array, setArray });
 
@@ -22,10 +23,13 @@ const App = () => {
   }, []);
 
   const resetArray = (arraySize: number) => {
-    const newArray = [];
+    const newArray: Array<Entry> = [];
 
     for (let i = 0; i < arraySize; i++) {
-      newArray.push(Math.floor(Math.random() * maxItemSize));
+      newArray.push({
+        value: Math.floor(Math.random() * maxItemSize),
+        state: EntryState.invalidated
+      });
     }
 
     setArray(newArray);
