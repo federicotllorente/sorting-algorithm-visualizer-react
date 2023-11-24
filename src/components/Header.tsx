@@ -1,6 +1,7 @@
 import { Dispatch, FunctionComponent, SetStateAction } from "react";
 
 type HeaderProps = {
+  isSortedAlready: boolean
   isConfettiEnabled: boolean
   setIsConfettiEnabled: Dispatch<SetStateAction<boolean>>;
   setIsSettingsOpen: Dispatch<SetStateAction<boolean>>;
@@ -10,6 +11,7 @@ type HeaderProps = {
 }
 
 export const Header: FunctionComponent<HeaderProps> = ({
+  isSortedAlready,
   isConfettiEnabled,
   setIsConfettiEnabled,
   setIsSettingsOpen,
@@ -33,7 +35,7 @@ export const Header: FunctionComponent<HeaderProps> = ({
         <button onClick={() => setIsSettingsOpen(true)}>
           Open settings
         </button>
-        <button onClick={handleSort}>
+        <button onClick={handleSort} disabled={isSortedAlready}>
           Sort
         </button>
       </div>
