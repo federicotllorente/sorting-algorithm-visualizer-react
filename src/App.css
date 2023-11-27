@@ -3,11 +3,56 @@
   padding: 0;
 }
 
-header {
+.App {
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  color: #fff;
   display: flex;
-  justify-content: space-between;
-  background-color: blanchedalmond;
+  justify-content: center;
+  align-items: end;
+}
+
+.App button {
+  padding: 8px 16px;
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.App button:disabled {
+  opacity: 50%;
+  cursor: not-allowed;
+}
+
+.App button:disabled:hover {
+  background-color: transparent;
+  cursor: not-allowed;
+}
+
+.App a {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+header {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
   padding: 16px;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff3f;
+  border: 1px solid #ffffff31;
+  border-radius: 8px;
+  box-shadow: 0 0 20px 10px #ffffff1f;
 }
 
 header div {
@@ -33,9 +78,20 @@ header div {
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 32px;
   padding: 32px;
-  background-color: burlywood;
+  background-color: #ffffffa4;
+  color: #000;
+  border: 1px solid #ffffff31;
+  border-radius: 8px;
+  box-shadow: 0 0 20px 10px #ffffff1f;
+  backdrop-filter: blur(24px);
+}
+
+.settings-modal--wrapper button {
+  color: #000;
+  border: 1px solid #000;
 }
 
 .settings-modal--wrapper--close-button {
@@ -62,13 +118,15 @@ header div {
 }
 
 .settings-modal--wrapper--sorting div button.active {
-  background-color: cadetblue;
+  background-color: #ffffff80;
+  color: #000;
 }
 
 .sorting-visualizer {
-  width: 80%;
-  height: calc(100vh - 64px);
+  width: 100%;
+  height: calc(100vh - 146px);
   margin: 0 auto;
+  padding: 0 16px;
   display: flex;
   align-items: end;
 }
@@ -76,13 +134,68 @@ header div {
 .sorting-visualizer span {
   width: -webkit-fill-available;
   position: relative;
-  background-color: rgb(0, 119, 255);
+  background-color: rgb(88, 88, 255);
 }
 
 .sorting-visualizer span.validating {
-  background-color: rgb(230, 46, 46);
+  background-color: #ff5050;
 }
 
 .sorting-visualizer span.validated {
-  background-color: green;
+  background-color: #97ff5b;
 }
+
+@media screen and (max-width: 649px) {
+  .App {
+    align-items: center;
+  }
+  
+  .alert {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: 850px) {
+  .App button:hover {
+    background-color: #ffffff46;
+    cursor: pointer;
+  }
+
+  .App a:hover {
+    text-decoration: underline;
+  }
+
+  header h2 {
+    font-size: 24px;
+  }
+
+  .settings-modal--wrapper--size input:hover {
+    cursor: pointer;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  header {
+    flex-direction: row;
+  }
+
+  header div {
+    gap: 8px;
+  }
+  
+  header div:first-child {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sorting-visualizer {
+    width: 80%;
+    height: calc(100vh - 127px);
+    padding: 0;
+  }
+}
+

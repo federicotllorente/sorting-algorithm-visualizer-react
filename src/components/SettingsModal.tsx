@@ -27,7 +27,7 @@ export const SettingsModal: FunctionComponent<SettingsModalProps> = ({
           Close
         </button>
         <div className="settings-modal--wrapper--size">
-          <h3>Change array size and sorting speed</h3>
+          <h3>Change array size</h3>
           <div>
             <input
               type="range"

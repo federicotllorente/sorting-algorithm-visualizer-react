@@ -23,7 +23,7 @@ export const Header: FunctionComponent<HeaderProps> = ({
     <header>
       <div>
         <h2>Array Sorting Visualizer</h2>
-        {/* <p>By <a href="https://www.federicotllorente.com/" target="_blank" rel="noopener noreferrer">Federico Tejedor Llorente</a></p> */}
+        <p>By <a href="https://www.federicotllorente.com/" target="_blank" rel="noopener noreferrer">Federico Tejedor Llorente</a></p>
       </div>
       <div>
         <button onClick={() => setIsConfettiEnabled(v => !v)}>

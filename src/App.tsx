@@ -48,19 +48,21 @@ const App = () => {
   }, [size]);
 
   const onQuickSort = async () => {
+    setIsSortedAlready(true)
+
     const arrayCopy = [...array];
     await doQuickSort(arrayCopy);
 
     if (isConfettiEnabled) jsConfetti.addConfetti()
-    setIsSortedAlready(true)
   }
 
   const onBubbleSort = async () => {
+    setIsSortedAlready(true)
+
     const arrayCopy = [...array];
     await doBubbleSort(arrayCopy);
 
     if (isConfettiEnabled) jsConfetti.addConfetti()
-    setIsSortedAlready(true)
   }
 
   const getHandleSortFunction = (sortingMethod: Sorting): () => void => {
@@ -78,7 +80,35 @@ const App = () => {
     }
   }
 
-  return (
+  const [isScreenValid, setIsScreenValid] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (window.outerWidth >= 650) {
+      setIsScreenValid(true);
+    } else {
+      setIsScreenValid(false);
+    }
+
+    window.addEventListener('resize', () => {
+      if (window.outerWidth >= 650) {
+        setIsScreenValid(true);
+      } else {
+        setIsScreenValid(false);
+      }
+    });
+
+    return () => {
+      window.removeEventListener('resize', () => {
+        if (window.outerWidth >= 650) {
+          setIsScreenValid(true);
+        } else {
+          setIsScreenValid(false);
+        }
+      });
+    }
+  }, [])
+
+  return isScreenValid ? (
     <div className="App">
       <Header
         isSortedAlready={isSortedAlready}
@@ -102,6 +132,13 @@ const App = () => {
         size={size}
         array={array}
       />
+    </div>
+  ) : (
+    <div className="App">
+      <div className="alert">
+        <h2>Window size is too small</h2>
+        <p>You should have a window with a width of at least 650px for this app to work. Please try with a larger window size</p>
+      </div>
     </div>
   );
 }
