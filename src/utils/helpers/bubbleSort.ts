@@ -1,77 +1,69 @@
 import { Dispatch, SetStateAction } from "react"
 import { Entry, EntryState } from "../types";
 
-type UseQuickSort = {
+type UseBubbleSort = {
   setArray: Dispatch<SetStateAction<Array<Entry>>>;
 }
 
-type UseQuickSortOutput = {
-  doQuickSort: (arr: Array<Entry>) => Promise<void>;
+type UseBubbleSortOutput = {
+  doBubbleSort: (arr: Array<Entry>) => Promise<void>;
 }
 
-export const useQuickSort = ({
+export const useBubbleSort = ({
   setArray
-}: UseQuickSort): UseQuickSortOutput => {
+}: UseBubbleSort): UseBubbleSortOutput => {
   let arrayForComparing: Array<Entry> = [];
 
-  const doQuickSort = async (arr: Array<Entry>) => {
+  const doBubbleSort = async (arr: Array<Entry>) => {
     const arrayForComparingToSet = [...arr];
     const arrayCopy = [...arr];
 
-    quickSort(arrayForComparingToSet, 0, arrayForComparingToSet.length - 1);
+    bubbleSort(arrayForComparingToSet, 0, arrayForComparingToSet.length - 1);
     arrayForComparing = arrayForComparingToSet;
 
-    await asyncQuickSort(arrayCopy, 0, arrayCopy.length - 1);
+    await asyncBubbleSort(arrayCopy, 0, arrayCopy.length - 1);
   }
 
-  const quickSort = (arr: Array<Entry>, start: number, end: number) => {
+  const bubbleSort = (arr: Array<Entry>, start: number, end: number) => {
     if (start >= end) return;
-  
-    let idx: number = partition(arr, start, end);
-  
-    quickSort(arr, start, idx - 1);
-    quickSort(arr, idx + 1, end);
+    
+    const lastIdx: number = partition(arr, start, end);
+
+    bubbleSort(arr, start, lastIdx);
   }
 
-  const asyncQuickSort = async (arr: Array<Entry>, start: number, end: number) => {
+  const asyncBubbleSort = async (arr: Array<Entry>, start: number, end: number) => {
     if (start >= end) return;
-  
-    let idx: number = await asyncPartition(arr, start, end);
-  
-    await asyncQuickSort(arr, start, idx - 1);
-    await asyncQuickSort(arr, idx + 1, end);
+    
+    const lastIdx: number = await asyncPartition(arr, start, end);
+
+    await asyncBubbleSort(arr, start, lastIdx);
   }
 
   const partition = (arr: Array<Entry>, start: number, end: number): number => {
-    let pivotIndex = start;
-    let pivotValue = arr[end].value;
-  
+    let lastIndex = end;
+
     for (let i = start; i < end; i++) {
-      if (arr[i].value < pivotValue) {
-        swap(arr, i, pivotIndex);
-        pivotIndex++;
+      if (arr[i].value > arr[i + 1].value) {
+        swap(arr, i, i + 1);
       }
     }
-  
-    swap(arr, pivotIndex, end);
-  
-    return pivotIndex;
+
+    lastIndex--;
+    return lastIndex;
   }
 
   const asyncPartition = async (arr: Array<Entry>, start: number, end: number): Promise<number> => {
-    let pivotIndex = start;
-    let pivotValue = arr[end].value;
-  
+    let lastIndex = end;
+
     for (let i = start; i < end; i++) {
-      if (arr[i].value < pivotValue) {
-        await asyncSwap(arr, i, pivotIndex);
-        pivotIndex++;
+      if (arr[i].value > arr[i + 1].value) {
+        await asyncSwap(arr, i, i + 1);
       }
     }
-  
-    await asyncSwap(arr, pivotIndex, end);
-  
-    return pivotIndex;
+
+    lastIndex--;
+    return lastIndex;
   }
 
   const swap = (arr: Array<Entry>, a: number, b: number) => {
@@ -81,21 +73,21 @@ export const useQuickSort = ({
   }
 
   const asyncSwap = async (arr: Array<Entry>, a: number, b: number) => {
-    await sleep(10);
+    await sleep(3);
 
     let tempArray = arr;
     tempArray[a].state = EntryState.validating;
     tempArray[b].state = EntryState.validating;
     setArray([...tempArray]);
 
-    await sleep(10);
+    await sleep(3);
 
     let temp = tempArray[a];
     tempArray[a] = tempArray[b];
     tempArray[b] = temp;
     setArray([...tempArray]);
 
-    await sleep(10);
+    await sleep(3);
 
     if (tempArray[a].value === arrayForComparing[a].value) {
       tempArray[a].state = EntryState.validated;
@@ -117,6 +109,6 @@ export const useQuickSort = ({
   }
 
   return {
-    doQuickSort
+    doBubbleSort
   }
 }

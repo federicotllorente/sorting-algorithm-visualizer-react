@@ -7,8 +7,9 @@ import { SettingsModal } from './components/SettingsModal';
 import { SortingVisualizer } from './components/SortingVisualizer';
 
 import { maxArraySize, maxItemSize } from './utils/constants';
-import { useQuickSort } from './utils/helpers/quickSort';
 import { Entry, EntryState, Sorting } from './utils/types';
+import { useQuickSort } from './utils/helpers/quickSort';
+import { useBubbleSort } from './utils/helpers/bubbleSort';
 
 const jsConfetti = new JSConfetti()
 
@@ -21,6 +22,7 @@ const App = () => {
   const [array, setArray] = useState<Array<Entry>>([]);
 
   const { doQuickSort } = useQuickSort({ setArray });
+  const { doBubbleSort } = useBubbleSort({ setArray });
 
   useEffect(() => {
     const randomSize = Math.floor(Math.random() * maxArraySize);
@@ -48,6 +50,15 @@ const App = () => {
   const onQuickSort = async () => {
     const arrayCopy = [...array];
     await doQuickSort(arrayCopy);
+
+    if (isConfettiEnabled) jsConfetti.addConfetti()
+    setIsSortedAlready(true)
+  }
+
+  const onBubbleSort = async () => {
+    const arrayCopy = [...array];
+    await doBubbleSort(arrayCopy);
+
     if (isConfettiEnabled) jsConfetti.addConfetti()
     setIsSortedAlready(true)
   }
@@ -56,6 +67,9 @@ const App = () => {
     switch (sortingMethod) {
       case Sorting.quick:
         return onQuickSort;
+
+      case Sorting.bubble:
+        return onBubbleSort;
 
       default: {
         const doNothing = () => {}
@@ -86,7 +100,6 @@ const App = () => {
       )}
       <SortingVisualizer
         size={size}
-        sorting={sorting}
         array={array}
       />
     </div>

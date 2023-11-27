@@ -1,17 +1,15 @@
 import { FunctionComponent } from "react";
 import { maxArraySize } from "../utils/constants";
 import { getPercentageFromItemSize } from "../utils/helpers/getPercentageFromItemSize";
-import { Entry, Sorting } from "../utils/types";
+import { Entry } from "../utils/types";
 
 type SortingVisualizerProps = {
   size: number;
-  sorting: Sorting;
   array: Array<Entry>;
 }
 
 export const SortingVisualizer: FunctionComponent<SortingVisualizerProps> = ({
   size,
-  sorting,
   array
 }) => {
   return (
