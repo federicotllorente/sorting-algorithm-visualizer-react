@@ -47,9 +47,10 @@ export const SettingsModal: FunctionComponent<SettingsModalProps> = ({
           <h3>Sorting algorithm</h3>
           <div>
             <button
-              onClick={() => setSorting(Sorting.merge)}
+              // onClick={() => setSorting(Sorting.merge)}
               id={`sorting-${Sorting.merge}`}
               className={sorting === Sorting.merge ? 'active' : 'not-active'}
+              disabled
             >
               Merge sort
             </button>
@@ -61,9 +62,10 @@ export const SettingsModal: FunctionComponent<SettingsModalProps> = ({
               Quick sort
             </button>
             <button
-              onClick={() => setSorting(Sorting.heap)}
+              // onClick={() => setSorting(Sorting.heap)}
               id={`sorting-${Sorting.heap}`}
               className={sorting === Sorting.heap ? 'active' : 'not-active'}
+              disabled
             >
               Heap sort
             </button>

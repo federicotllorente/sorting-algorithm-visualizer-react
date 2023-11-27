@@ -18,7 +18,7 @@ const App = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [isSortedAlready, setIsSortedAlready] = useState<boolean>(false);
   const [size, setSize] = useState<number>(0);
-  const [sorting, setSorting] = useState<Sorting>(Sorting.merge);
+  const [sorting, setSorting] = useState<Sorting>(Sorting.quick);
   const [array, setArray] = useState<Array<Entry>>([]);
 
   const { doQuickSort } = useQuickSort({ setArray });
